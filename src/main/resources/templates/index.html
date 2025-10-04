@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products Page</title>
+  <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.75rem; text-align: left; }
+    th { background-color: #f5f5f5; }
+    tr.variant-row td { background-color: #fcfcfc; }
+    .out-of-stock { color: red; font-weight: bold; }
+    .in-stock { color: green; font-weight: bold; }
+    img.variant-img { width: 60px; height: auto; }
+    .btn { padding: 10px 16px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 4px; }
+    .btn i { margin-right: 5px; }
+    form input { margin-right: 10px; padding: 6px; }
+  </style>
+</head>
+<body>
+
+<h1><i class="fa-solid fa-store"></i> Products</h1>
+
+<!-- Load Products Button -->
+<button class="btn" hx-get="/product/products" hx-target="#products-table" hx-swap="innerHTML">
+  <i class="fa-solid fa-download"></i> Load Products
+</button>
+
+<!-- Product Table -->
+<div id="products-table">
+  <!-- HTMX will load product table here -->
+  <p>Loading products...</p> <!-- Display loading message initially -->
+</div>
+
+</body>
+</html>

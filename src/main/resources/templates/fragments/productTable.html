@@ -1,0 +1,66 @@
+<div th:fragment="productTable" xmlns:th="http://www.thymeleaf.org">
+  <table>
+    <thead>
+    <tr>
+      <th>Sr.</th>
+      <th>Title</th>
+      <th>Vendor</th>
+      <th>Variant Title</th>
+      <th>Color</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <td th:text="${iStat.index + 1}"></td>
+    <!-- Loop over products -->
+    <tr th:each="product, iStat : ${products}">
+      <!--      <td th:text="${iStat.index + 1}"></td>-->
+      <!-- Product Title and Vendor: these are repeated for each variant, so we set rowspan -->
+      <td th:text="${product != null ? product.title : 'No Title'}"
+          th:rowspan="${product != null && product.variants != null ? product.variants.size() : 1}"></td>
+      <td th:text="${product != null ? product.vendor : 'No Vendor'}"
+          th:rowspan="${product != null && product.variants != null ? product.variants.size() : 1}"></td>
+
+      <!-- First Variant -->
+      <td th:text="${product != null && product.variants != null && product.variants.size() > 0 ? product.variants[0]?.title : 'No Variant'}"></td>
+      <td th:text="${product != null && product.variants != null && product.variants.size() > 0 ? product.variants[0]?.option1 : 'No Option'}"></td>
+      <td th:text="${product != null && product.variants != null && product.variants.size() > 0 ? product.variants[0]?.option2 : 'No Option'}"></td>
+      <td th:text="${product != null && product.variants != null && product.variants.size() > 0 ? product.variants[0]?.price + ' NOK' : 'N/A'}"></td>
+      <td th:text="${product != null && product.variants != null && product.variants.size() > 0 ? (product.variants[0]?.available ? 'In stock' : 'Out of stock') : 'Out of stock'}"></td>
+      <td>
+        <img
+            th:src="${product != null && product.variants != null && product.variants.size() > 0 ? product.variants[0]?.featuredImageUrl : '/default-image.jpg'}"
+            width="60" alt="Variant Image"/>
+      </td>
+    </tr>
+
+    <!-- Loop over remaining variants -->
+    <tr th:each="variant, iStat : product.variants"
+        th:if="${iStat.index > 0}">
+      <td th:text="${variant != null ? variant.title : 'No Title'}"></td>
+      <td th:text="${variant != null ? variant.option1 : 'No Option'}"></td>
+      <td th:text="${variant != null ? variant.option2 : 'No Option'}"></td>
+      <td th:text="${variant != null ? variant.price + ' NOK' : 'N/A'}"></td>
+      <td th:text="${variant != null ? (variant.available ? 'In stock' : 'Out of stock') : 'Out of stock'}"></td>
+      <td>
+        <img th:src="${variant != null ? variant.featuredImageUrl : '/default-image.jpg'}"
+             width="60" alt="Variant Image"/>
+      </td>
+    </tr>
+
+    <!-- If there are no variants, show this row -->
+    <tr th:if="${product != null && #lists.isEmpty(product.variants)}">
+      <td colspan="8">No variants available for this product.</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- If no products are available, show a message -->
+  <div th:if="${#lists.isEmpty(products)}"
+       style="margin-top: 1rem; font-weight: bold; color: #888;">
+    No products found.
+  </div>
+</div>
