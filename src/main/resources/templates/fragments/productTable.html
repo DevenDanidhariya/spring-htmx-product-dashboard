@@ -13,11 +13,11 @@
       <th>Image</th>
     </tr>
     </thead>
-    <tbody>
-    <td th:text="${iStat.index + 1}"></td>
+    <tbody th:each="product, iStat : ${products}">
     <!-- Loop over products -->
-    <tr th:each="product, iStat : ${products}">
-      <!--      <td th:text="${iStat.index + 1}"></td>-->
+    <tr>
+      <td th:text="${iStat.index + 1}"
+          th:rowspan="${product != null && product.variants != null ? product.variants.size() : 1}"></td>
       <!-- Product Title and Vendor: these are repeated for each variant, so we set rowspan -->
       <td th:text="${product != null ? product.title : 'No Title'}"
           th:rowspan="${product != null && product.variants != null ? product.variants.size() : 1}"></td>
@@ -33,13 +33,14 @@
       <td>
         <img
             th:src="${product != null && product.variants != null && product.variants.size() > 0 ? product.variants[0]?.featuredImageUrl : '/default-image.jpg'}"
-            width="60" alt="Variant Image"/>
+            width="60" alt="No Variant Image"/>
       </td>
     </tr>
 
     <!-- Loop over remaining variants -->
-    <tr th:each="variant, iStat : product.variants"
+    <tr th:each="variant, iStat : ${product.variants}"
         th:if="${iStat.index > 0}">
+      <!--      <td></td>-->
       <td th:text="${variant != null ? variant.title : 'No Title'}"></td>
       <td th:text="${variant != null ? variant.option1 : 'No Option'}"></td>
       <td th:text="${variant != null ? variant.option2 : 'No Option'}"></td>
