@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Deven Danidhariya
+ */
 public record ProductDTO(
     Long id,
     String title,
@@ -21,6 +24,18 @@ public record ProductDTO(
 ) {
 
 
+  /**
+   * @param product The Product entity containing the data to be mapped.
+   * @return A ProductDTO object populated with the mapped data from the Product entity.
+   * <p>
+   * Maps a Product entity to a ProductDTO.
+   * <p>
+   * This static method takes a Product object as input, extracts its relevant data, and returns a
+   * ProductDTO that contains the mapped values. The ProductDTO is used to represent the product
+   * data in a more suitable format for transfer or display.
+   * <p>
+   * @author Deven Danidhariya
+   */
   public static ProductDTO convertProDuctToProductDTO(Product product) {
     return new ProductDTO(product.getId(), product.getTitle(), product.getHandle(),
         product.getBodyHtml(), product.getPublishedAt(), product.getCreatedAt(),

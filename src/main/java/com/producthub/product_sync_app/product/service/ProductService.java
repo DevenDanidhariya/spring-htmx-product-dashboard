@@ -7,6 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Deven Danidhariya
+ */
 @Service
 public class ProductService {
 
@@ -19,6 +22,12 @@ public class ProductService {
   }
 
 
+  /**
+   * @return List of ProductDTO which fetched retrieved
+   * <p>
+   * Fetch all Product Records
+   * @author Deven Danidhariya
+   */
   public List<ProductDTO> getAllProducts() {
     LOGGER.info("Retrieving all Products.");
     return productRepository.findAll().stream().map(ProductDTO::convertProDuctToProductDTO)

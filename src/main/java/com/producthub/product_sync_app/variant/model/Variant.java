@@ -11,6 +11,11 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author Deven Danidhariya
+ * <p>
+ * Model class for Variants
+ */
 @Getter
 @Setter
 @Entity

@@ -4,12 +4,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * @author Deven Danidhariya
+ */
 @SpringBootApplication
 @EnableScheduling
 public class ProductSyncApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProductSyncApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(ProductSyncApplication.class, args);
+  }
 
 }
