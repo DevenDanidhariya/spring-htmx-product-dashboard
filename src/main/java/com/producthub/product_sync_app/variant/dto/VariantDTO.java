@@ -2,6 +2,9 @@ package com.producthub.product_sync_app.variant.dto;
 
 import com.producthub.product_sync_app.variant.model.Variant;
 
+/**
+ * @author Deven Danidhariya
+ */
 public record VariantDTO(
     Long id,
     Long productId,

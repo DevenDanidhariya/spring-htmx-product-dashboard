@@ -14,6 +14,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * @author Deven Danidhariya
+ * <p>
+ * This class represents a scheduled task responsible for fetching up the products.
+ * </p>
+ * The scheduled task relies on an external API to fetch the actual products.
+ */
 @Component
 public class FetchProductScheduler {
 
@@ -30,15 +37,23 @@ public class FetchProductScheduler {
     this.variantRepository = variantRepository;
   }
 
-  // Inject the API URL from application.properties
   @Value("${api.url}")
   private String apiUrl;
 
-  //  @Scheduled(cron = "0 0 0 * * *")
-  @Scheduled(initialDelay = 0, fixedDelay = Long.MAX_VALUE)
+  /**
+   * @author Deven Danidhariya
+   * <p>
+   * This method uses the rest template for communicate and fetch prodict record as JSON and mapout
+   * with product, and it's respecctiv variants.
+   * <p>
+   * The method is invoked automatically by Spring based, on the cron expression specified.
+   */
+  @Scheduled(cron = "0 0 0 * * *")
+//  @Scheduled(initialDelay = 0, fixedDelay = Long.MAX_VALUE)
   public void fetchAndSaveProducts() {
 
-    LOGGER.info("Scheduler is Running.");
+    LOGGER.info(
+        "Scheduling Job Started: Fetching product and variant details from external service.");
 
     RestTemplate restTemplate = new RestTemplate();
     JsonNode rootNode = restTemplate.getForObject(apiUrl, JsonNode.class);
@@ -73,7 +88,6 @@ public class FetchProductScheduler {
 
       // Save product
       productRepository.save(product);
-      LOGGER.info("Product");
 
       // Save variants
       JsonNode variantsNode = productNode.get("variants");
@@ -109,10 +123,12 @@ public class FetchProductScheduler {
             variantNode.hasNonNull("updated_at") ?
                 variantNode.get("updated_at").asText() : null);
 
+        //save variants
         variantRepository.save(variant);
-        LOGGER.info("Variant");
       }
     }
+    LOGGER.info(
+        "Scheduling Job Completed: Product and variant details fetched and stored successfully.");
   }
 
 
